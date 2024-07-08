@@ -8,10 +8,13 @@ export class UserService {
   constructor(@InjectRepository(User) private repo: Repository<User>) {}
   create(email: string, password: string) {
     const user = this.repo.create({ email, password });
-    this.repo.save(user);
+    return this.repo.save(user);
   }
 
   findOne(id: number) {
+    if (!id) {
+      return null;
+    }
     return this.repo.findOneBy({ id });
   }
 
